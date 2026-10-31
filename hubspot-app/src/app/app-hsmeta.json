@@ -1,0 +1,31 @@
+{
+  "uid": "wix_hubspot_sync",
+  "type": "app",
+  "config": {
+    "name": "Wix HubSpot Sync",
+    "description": "Two-way contact sync and Wix Forms lead capture between a Wix site and HubSpot.",
+    "distribution": "marketplace",
+    "auth": {
+      "type": "oauth",
+      "redirectUrls": ["https://wixhub-api.198.199.65.142.sslip.io/oauth/hubspot/callback"],
+      "requiredScopes": [
+        "oauth",
+        "crm.objects.contacts.read",
+        "crm.objects.contacts.write",
+        "crm.schemas.contacts.read",
+        "crm.schemas.contacts.write"
+      ],
+      "optionalScopes": [],
+      "conditionallyRequiredScopes": []
+    },
+    "permittedUrls": {
+      "fetch": ["https://api.hubapi.com"],
+      "iframe": [],
+      "img": []
+    },
+    "support": {
+      "documentationUrl": "https://github.com/heismyke/wix-hubspot-sync",
+      "supportUrl": "https://github.com/heismyke/wix-hubspot-sync/issues"
+    }
+  }
+}

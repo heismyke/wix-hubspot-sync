@@ -81,11 +81,11 @@ The compose file joins the reverse proxy's network. For TLS, point a Caddy/nginx
 5. **Webhooks**: callback `https://<host>/webhooks/wix` for *Contact Created*, *Contact Updated*, *Submission Created* and *App Removed*. Copy the **public key** into `WIX_PUBLIC_KEY`.
 6. Install the app on a test site from *Test your app*.
 
-**HubSpot** (developer account → Apps → Create app):
+**HubSpot** (project-based app, defined as code in [`hubspot-app/`](hubspot-app)):
 
-1. **Auth**: set the redirect URL to `https://<host>/oauth/hubspot/callback` and the scopes to those listed above. Copy the Client ID and Secret.
-2. **Webhooks**: target URL `https://<host>/webhooks/hubspot`. Subscribe to `contact.creation`, plus `contact.propertyChange` for `email`, `firstname`, `lastname`, `phone`, `company`, `jobtitle` and any other property you map. Anything not subscribed is still picked up by the 60s poll.
-3. Use a **developer test account** to connect.
+1. Set `<host>` in `hubspot-app/src/app/app-hsmeta.json` (OAuth redirect URL, scopes) and `src/app/webhooks/webhooks-hsmeta.json` (target URL; `contact.creation`, `restore`, `merge`, and `contact.propertyChange` for `email`, `firstname`, `lastname`, `phone`, `company`, `jobtitle`). Properties without a subscription are still picked up by the 60s poll.
+2. `npm i -g @hubspot/cli && hs account auth`, then `cd hubspot-app && hs project upload`.
+3. In HubSpot → Development → Projects → the app → **Auth**, copy the Client ID and Secret into `.env`.
 
 ## Testing it end to end
 

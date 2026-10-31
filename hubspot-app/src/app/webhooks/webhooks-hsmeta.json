@@ -1,0 +1,23 @@
+{
+  "uid": "wix_hubspot_sync_webhooks",
+  "type": "webhooks",
+  "config": {
+    "settings": {
+      "targetUrl": "https://wixhub-api.198.199.65.142.sslip.io/webhooks/hubspot",
+      "maxConcurrentRequests": 10
+    },
+    "subscriptions": {
+      "legacyCrmObjects": [
+          { "subscriptionType": "contact.creation", "active": true },
+          { "subscriptionType": "contact.restore", "active": true },
+          { "subscriptionType": "contact.merge", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "email", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "firstname", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "lastname", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "phone", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "company", "active": true },
+          { "subscriptionType": "contact.propertyChange", "propertyName": "jobtitle", "active": true }
+      ]
+    }
+  }
+}
