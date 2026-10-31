@@ -1,0 +1,40 @@
+# Self-hosted deployment: app + Postgres. DATABASE_URL can point at Supabase instead.
+name: wix-hubspot-sync
+
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: 3000
+      DATABASE_URL: ${DATABASE_URL:-postgres://app:${POSTGRES_PASSWORD}@db:5432/app}
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 256m
+    networks: [default, proxy]
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 5s
+      retries: 10
+    mem_limit: 192m
+
+volumes:
+  pgdata:
+
+networks:
+  # Shared network of the reverse proxy (Caddy) that terminates TLS.
+  proxy:
+    name: ${PROXY_NETWORK:-hixmastudio-proxy_default}
+    external: true
