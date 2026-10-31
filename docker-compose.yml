@@ -4,6 +4,7 @@ name: wix-hubspot-sync
 services:
   app:
     build: .
+    image: wix-hubspot-sync:latest
     restart: unless-stopped
     env_file: .env
     environment:
