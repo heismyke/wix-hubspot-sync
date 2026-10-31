@@ -10,7 +10,11 @@ const schema = z.object({
   // Wix app (Dev Center → OAuth / Webhooks)
   WIX_APP_ID: z.string().min(1),
   WIX_APP_SECRET: z.string().min(1),
-  WIX_PUBLIC_KEY: z.string().min(1),
+  // PEM; env files can't hold newlines, so literal "\n" escapes are accepted too.
+  WIX_PUBLIC_KEY: z
+    .string()
+    .min(1)
+    .transform((v) => v.replace(/\\n/g, '\n')),
 
   // HubSpot app (Developer account → app → Auth)
   HUBSPOT_CLIENT_ID: z.string().min(1),
